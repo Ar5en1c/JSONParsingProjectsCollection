@@ -1,2 +1,2 @@
 # JSONParsingProjectsCollection
-Created an App for JSON parsing and API calls
+Created an iOS App for JSON parsing and API calls
