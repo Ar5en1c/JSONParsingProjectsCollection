@@ -1,2 +1,2 @@
-# JSONParsingProjectsCollection
-Created an iOS App for JSON parsing and API calls
+# JSONParsingProjectsCollection 
+Created an iOS app to demonstrate and practice 5 different JSON parsing tasks, along with making API calls using two different methods: one utilizing Closure and the other using async/await.
