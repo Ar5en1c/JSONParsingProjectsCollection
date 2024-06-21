@@ -20,25 +20,23 @@ class NewsFeedCell: UITableViewCell {
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var newsImage: UIImageView!
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
-
 }
 
+// MARK: Loading the news article detials in the cell
 extension NewsFeedCell {
     func loadData() {
         guard let article = dataReceived else { return }
         headlineLabel.text = article.title
         if (article.author != nil) {
             authorLabel.text = article.author } else {
-                authorLabel.text = "author unknown"
+                authorLabel.text = Constants.unknownAuthor.rawValue
             }
         sourceLabel.text = article.source.name
         if let imageURL = article.urlToImage {

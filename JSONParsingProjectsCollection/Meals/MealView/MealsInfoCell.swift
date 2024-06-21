@@ -48,6 +48,7 @@ class MealsInfoCell: UITableViewCell {
     }
 }
 
+// MARK: Loading the meal detials in the cell
 extension MealsInfoCell {
     func loadData() {
         guard let meal = dataReceived else { return }

@@ -18,11 +18,14 @@ enum Constants: String {
     case nA = "N/A"
     case genre = "Genre"
     case country = "Country"
+    case unknownAuthor = "author unknown"
 }
 
 
+// MARK: Error Messages stored for better management and easy use
 enum ErrorMessages: String {
     case errorImg = "person.crop.circle.badge.exclamationmark"
+    case invalidURL = "URL is invalid"
     case errorFetchMessage = "Failed to fetch data"
     case errorImgFetchMessage = "Failed to fetch Image"
     case noDataMessage = "No Data Available"

@@ -21,6 +21,7 @@ class Screen4VC: UIViewController {
     }
 }
 
+// MARK: fetching the data from the API by calling fetchData in the Screen4DataViewModel
 extension Screen4VC {
     func loadData() {
         Task {
@@ -33,6 +34,7 @@ extension Screen4VC {
     }
 }
 
+// MARK: Reloading the data on to the main thread using protocol delegate method
 extension Screen4VC: NewsInfoDataDelegate {
     func didFetchNewsInfo() {
         DispatchQueue.main.async {
@@ -41,6 +43,7 @@ extension Screen4VC: NewsInfoDataDelegate {
     }
 }
 
+// MARK: Assigning the data to table cell from the Screen4DataViewModel
 extension Screen4VC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getNumberOfArticles()
@@ -53,6 +56,7 @@ extension Screen4VC: UITableViewDataSource {
     }
 }
 
+// MARK: Handling the cell clicks to go to the details VC
 extension Screen4VC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let DetailedVC = storyboard?.instantiateViewController(withIdentifier: "DetailedNewsVC") as? DetailedNewsVC else { return }

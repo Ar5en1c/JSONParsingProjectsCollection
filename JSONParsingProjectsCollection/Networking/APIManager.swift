@@ -57,6 +57,9 @@ import Foundation
 class APIManager {
     static let shared = APIManager()
     
+    private init(){}
+    
+// MARK: Fetch Image function using async/await with generic Data? Type for converting the data to UIImage later
     func fetchData<T: Decodable>(url: String) async throws -> T {
         guard let serverURL = URL(string: url) else {
             throw FetchError.invalidURL
@@ -71,10 +74,10 @@ class APIManager {
         }
     }
     
-    // MARK: Fetch Image function with generic Data? Type for converting the data to UIImage
+// MARK: Fetch Image function using async/await with generic Data? Type for converting the data to UIImage later
     func fetchImage(from url: String) async throws -> Data? {
         guard let imageURL = URL(string: url) else {
-            print(FetchError.invalidURL)
+            print(ErrorMessages.invalidURL.rawValue)
             return nil
         }
         do {

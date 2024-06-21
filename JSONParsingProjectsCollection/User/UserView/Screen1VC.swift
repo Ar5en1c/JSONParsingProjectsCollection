@@ -22,6 +22,7 @@ class Screen1VC: UIViewController {
     }
 }
 
+// MARK: Fetching the data by calling the fetchData in Screen1DataViewModel
 extension Screen1VC {
     func loadData() {
         Task {
@@ -34,6 +35,7 @@ extension Screen1VC {
     }
 }
 
+// MARK: Reloading the data on to the TABLE VIEW using main thread
 extension Screen1VC: UserDataDelegate {
     func didFetchUserData() {
         DispatchQueue.main.async {
@@ -42,6 +44,7 @@ extension Screen1VC: UserDataDelegate {
     }
 }
 
+// MARK: Assigning the data to the Table View Cells
 extension Screen1VC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getTotalUsersCount()
@@ -54,6 +57,7 @@ extension Screen1VC: UITableViewDataSource {
     }
 }
 
+// MARK: Handling the cell clicks
 extension Screen1VC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let userDetailsVC = storyboard?.instantiateViewController(identifier: "UserDetailsVC") as? UserDetailsVC else { return }

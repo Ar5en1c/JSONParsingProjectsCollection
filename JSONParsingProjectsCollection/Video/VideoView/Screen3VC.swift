@@ -24,6 +24,7 @@ class Screen3VC: UIViewController {
     }
 }
 
+// MARK: Fetching the data by calling the fetchData in Screen3DataViewModel
 extension Screen3VC {
     func loadData() {
         Task {
@@ -36,7 +37,7 @@ extension Screen3VC {
     }
 }
 
-
+// MARK: Assigning the data to the labels
 extension Screen3VC: VideosInfoDataDelegate {
     func didFetchVideosInfo() {
         guard let videosInfo = viewModel.getVideoInfo(at: 0) else { return }
