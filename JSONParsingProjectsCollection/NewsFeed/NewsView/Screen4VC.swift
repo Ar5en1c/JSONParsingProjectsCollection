@@ -10,7 +10,7 @@ import UIKit
 class Screen4VC: UIViewController {
 
     @IBOutlet weak var newsFeedTable: UITableView!
-    var viewModel = Screen4DataViewModel()
+    var viewModel = Screen4DataViewModel(apiManager: APIManager())
     
     override func viewDidLoad() {
         super.viewDidLoad()

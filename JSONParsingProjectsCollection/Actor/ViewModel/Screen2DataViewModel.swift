@@ -34,14 +34,19 @@ import Foundation
 class Screen2DataViewModel {
     weak var delegate: ActorInfoDataDelegate?
     private var actorInfo: ActorInfo?
+    private var apiManager: APIManager
+    
+    init(apiManager: APIManager) {
+        self.apiManager = apiManager
+    }
     
     func fetchData() async throws{
         do {
-            let actorData: ActorInfo? = try await APIManager.shared.fetchData(url: Constants.actorInfoAPI.rawValue)
-            DispatchQueue.main.async {
-                self.actorInfo = actorData
-                self.delegate?.didFetchActorInfo()
-            }
+            let actorData: ActorInfo? = try await apiManager.fetchData(url: Constants.actorInfoAPI.rawValue)
+//            DispatchQueue.main.async {
+            self.actorInfo = actorData
+            self.delegate?.didFetchActorInfo()
+//            }
         } catch {
             print(ErrorMessages.errorFetchMessage.rawValue)
         }

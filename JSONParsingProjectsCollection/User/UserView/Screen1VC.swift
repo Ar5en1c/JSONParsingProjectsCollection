@@ -11,7 +11,7 @@ class Screen1VC: UIViewController {
 
     @IBOutlet weak var userTableView: UITableView!
     
-    var viewModel = Screen1DataViewModel()
+    var viewModel = Screen1DataViewModel(apiManager: APIManager())
     
     override func viewDidLoad() {
         super.viewDidLoad()

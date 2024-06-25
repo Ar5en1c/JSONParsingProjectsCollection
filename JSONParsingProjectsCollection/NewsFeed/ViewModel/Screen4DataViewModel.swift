@@ -10,14 +10,19 @@ import Foundation
 class Screen4DataViewModel {
     weak var delegate: NewsInfoDataDelegate?
     private var newsArticleInfoList: [Article]?
+    private var apiManager: APIManager
+    
+    init(apiManager: APIManager) {
+        self.apiManager = apiManager
+    }
 
     func fetchData() async throws{
         do {
-            let newsInfo: NewsResponse? = try await APIManager.shared.fetchData(url: Constants.newsInfoAPI.rawValue)
-            DispatchQueue.main.async {
+            let newsInfo: NewsResponse? = try await apiManager.fetchData(url: Constants.newsInfoAPI.rawValue)
+//            DispatchQueue.main.async {
                 self.newsArticleInfoList = newsInfo?.articles
                 self.delegate?.didFetchNewsInfo()
-            }
+//            }
         } catch {
             print(ErrorMessages.errorFetchMessage.rawValue)
         }

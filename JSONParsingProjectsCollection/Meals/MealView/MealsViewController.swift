@@ -10,7 +10,7 @@ import UIKit
 class MealsViewController: UIViewController {
     
     @IBOutlet weak var mealsTableView: UITableView!
-    var viewModel = Screen5DataViewModel()
+    var viewModel = Screen5DataViewModel(apiManager: APIManager())
     
     override func viewDidLoad() {
         super.viewDidLoad()

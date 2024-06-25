@@ -10,14 +10,19 @@ import Foundation
 class Screen5DataViewModel {
     weak var delegate: MealsInfoDataDelegate?
     private var mealsInfoList: [Meal]?
+    private var apiManager: APIManager
+    
+    init(apiManager: APIManager) {
+        self.apiManager = apiManager
+    }
 
     func fetchData() async throws {
         do {
-            let mealsInfo: Menu? = try await APIManager.shared.fetchData(url: Constants.mealsInfoAPI.rawValue)
-            DispatchQueue.main.async {
+            let mealsInfo: Menu? = try await apiManager.fetchData(url: Constants.mealsInfoAPI.rawValue)
+//            DispatchQueue.main.async {
                 self.mealsInfoList = mealsInfo?.meals
                 self.delegate?.didFetchMealsInfo()
-            }
+//            }
         } catch {
             
         }
