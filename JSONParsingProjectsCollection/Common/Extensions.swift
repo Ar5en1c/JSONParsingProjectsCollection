@@ -23,7 +23,7 @@ extension String {
 // MARK: extension for fetfching and assigning the UIImage with data
 extension UIImageView {
     func getImageFromServer(imageURL: String) async throws {
-            if let data = try await APIManager.shared.fetchImage(from: imageURL) {
+            if let data = try await APIManager.shared.fetchDataAsDataObj(from: imageURL) {
                 DispatchQueue.main.async {
                     if let image = UIImage(data: data) {
                         self.image = image

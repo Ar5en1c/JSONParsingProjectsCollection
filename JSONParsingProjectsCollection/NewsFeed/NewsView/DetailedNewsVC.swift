@@ -34,35 +34,40 @@ class DetailedNewsVC: UIViewController {
         setupMapView()
         setupLocationManager()
     }
-
-    func setupWebView() {
-        webView = WKWebView(frame: .zero)
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(webView)
-        NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: newsWebSegmentControl.bottomAnchor, constant: 8),
-            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        webView.isHidden = true
-    }
-    
-    func setupLocationManager() {
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager?.requestWhenInUseAuthorization()
-        }
-    
+// MARK: setting up segment controls
     func setupSegmentControl() {
         newsWebSegmentControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
         }
         
+    
+    //    MARK: handling segment clicks and updating views based on the segment
+    @objc func segmentChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+            case 0:
+            // Hide map and web view
+            mapView.isHidden = true
+            webView.isHidden = true
+            case 1:
+            // Show web view
+            if let urlString = newsData?.url, let url = URL(string: urlString) {
+                webView.load(URLRequest(url: url))
+            }
+            mapView.isHidden = true
+            webView.isHidden = false
+            case 2:
+            // Show map view
+            print("Map Segment Selected")
+            webView.isHidden = true
+            mapView.isHidden = false
+            default:
+                break
+            }
+        }
 }
 
 extension DetailedNewsVC: CLLocationManagerDelegate {
     
+    // MARK: checking and asking for authorization if needed
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
             case .notDetermined:
@@ -98,6 +103,7 @@ extension DetailedNewsVC: CLLocationManagerDelegate {
 }
 
 extension DetailedNewsVC {
+//    MARK: Setting up the Map view
     func setupMapView() {
         mapView = MKMapView(frame: .zero)
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -110,33 +116,31 @@ extension DetailedNewsVC {
         ])
         mapView.isHidden = true
     }
-    
-    @objc func segmentChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-            case 0:
-            // Hide map and web view
-            mapView.isHidden = true
-            webView.isHidden = true
-            case 1:
-            // Show web view
-            if let urlString = newsData?.url, let url = URL(string: urlString) {
-                webView.load(URLRequest(url: url))
-            }
-            mapView.isHidden = true
-            webView.isHidden = false
-            case 2:
-            // Show map view
-            print("Map Segment Selected")
-            webView.isHidden = true
-            mapView.isHidden = false
-            default:
-                break
-            }
+//    MARK: Setting up the Web view
+    func setupWebView() {
+        webView = WKWebView(frame: .zero)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(webView)
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: newsWebSegmentControl.bottomAnchor, constant: 8),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        webView.isHidden = true
+    }
+//    MARK: Setting up the Location Manager view
+    func setupLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.requestWhenInUseAuthorization()
         }
 }
 
 
 extension DetailedNewsVC {
+//    MARK: Loading and assigning the news article data to the view
     func loadNews() {
         guard let newsArticle = newsData else { return }
         newsTitleLabel.text = newsArticle.title

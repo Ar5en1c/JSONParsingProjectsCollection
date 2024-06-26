@@ -10,15 +10,17 @@ import XCTest
 
 final class Screen1DataViewModelTests: XCTestCase {
     
-    var mockApiManager: MockAPIManager!
+    var mockApiManager: APIManager!
     var mockViewController: Screen1VC!
     var mockDataViewModel: Screen1DataViewModel!
+    var mockNetworkManager: NetworkManager!
 
     override func setUpWithError() throws {
-        mockApiManager = MockAPIManager()
+        mockApiManager = APIManager()
         mockViewController = Screen1VC()
         mockDataViewModel = Screen1DataViewModel(apiManager: mockApiManager)
         mockViewController.viewModel = mockDataViewModel
+        mockNetworkManager = NetworkManager.shared
     }
 
     override func tearDownWithError() throws {
@@ -28,6 +30,7 @@ final class Screen1DataViewModelTests: XCTestCase {
     }
 
     func testFetchUsersSuccess() async {
+        mockNetworkManager.isOnline.toggle()
         do {
             try await mockDataViewModel.fetchData()
         } catch {

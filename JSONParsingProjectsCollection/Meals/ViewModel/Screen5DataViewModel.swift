@@ -18,7 +18,7 @@ class Screen5DataViewModel {
 
     func fetchData() async throws {
         do {
-            let mealsInfo: Menu? = try await apiManager.fetchData(url: Constants.mealsInfoAPI.rawValue)
+            let mealsInfo: Menu? = try await apiManager.fetchDataAsJSON(url: Constants.mealsInfoAPI.rawValue)
 //            DispatchQueue.main.async {
                 self.mealsInfoList = mealsInfo?.meals
                 self.delegate?.didFetchMealsInfo()

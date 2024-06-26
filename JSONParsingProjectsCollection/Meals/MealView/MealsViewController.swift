@@ -18,7 +18,6 @@ class MealsViewController: UIViewController {
         viewModel.delegate = self
         loadData()
     }
-    
 }
 
 extension MealsViewController {

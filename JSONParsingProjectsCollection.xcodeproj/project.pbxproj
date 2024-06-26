@@ -273,9 +273,9 @@
 		0CEB98552C235F1600519402 /* Actor */ = {
 			isa = PBXGroup;
 			children = (
+				0CEB98562C235F2100519402 /* ViewModel */,
 				0CEB98582C235F7700519402 /* Model */,
 				0CEB98572C235F2900519402 /* ActorView */,
-				0CEB98562C235F2100519402 /* ViewModel */,
 			);
 			path = Actor;
 			sourceTree = "<group>";

@@ -42,7 +42,7 @@ class Screen2DataViewModel {
     
     func fetchData() async throws{
         do {
-            let actorData: ActorInfo? = try await apiManager.fetchData(url: Constants.actorInfoAPI.rawValue)
+            let actorData: ActorInfo? = try await apiManager.fetchDataAsJSON(url: Constants.actorInfoAPI.rawValue)
 //            DispatchQueue.main.async {
             self.actorInfo = actorData
             self.delegate?.didFetchActorInfo()

@@ -8,7 +8,7 @@ import Foundation
 
 class MockAPIManager: APIManager {
 
-    override func fetchData<T: Decodable>(url: String) async throws -> T {
+    override func fetchDataAsJSON<T: Decodable>(url: String) async throws -> T {
             switch url {
             case Constants.userInfoAPI.rawValue:
                 return MockData.users as! T

@@ -18,7 +18,7 @@ class Screen4DataViewModel {
 
     func fetchData() async throws{
         do {
-            let newsInfo: NewsResponse? = try await apiManager.fetchData(url: Constants.newsInfoAPI.rawValue)
+            let newsInfo: NewsResponse? = try await apiManager.fetchDataAsJSON(url: Constants.newsInfoAPI.rawValue)
 //            DispatchQueue.main.async {
                 self.newsArticleInfoList = newsInfo?.articles
                 self.delegate?.didFetchNewsInfo()

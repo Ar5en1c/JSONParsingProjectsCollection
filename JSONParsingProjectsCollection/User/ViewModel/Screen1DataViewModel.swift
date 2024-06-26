@@ -18,7 +18,7 @@ class Screen1DataViewModel {
     
     func fetchData() async throws {
         do {
-            let userResult: [User] = try await apiManager.fetchData(url: Constants.userInfoAPI.rawValue)
+            let userResult: [User] = try await apiManager.fetchDataAsJSON(url: Constants.userInfoAPI.rawValue)
             self.userInfoList = userResult
             self.delegate?.didFetchUserData()
         } catch {

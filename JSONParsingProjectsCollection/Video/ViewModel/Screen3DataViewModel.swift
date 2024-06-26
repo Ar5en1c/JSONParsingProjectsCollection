@@ -48,7 +48,7 @@ class Screen3DataViewModel {
     
     func fetchData() async throws{
         do {
-            let videosData: [VideosModel] = try await apiManager.fetchData(url: Constants.videoInfoAPI.rawValue)
+            let videosData: [VideosModel] = try await apiManager.fetchDataAsJSON(url: Constants.videoInfoAPI.rawValue)
 //            DispatchQueue.main.async {
             self.videoInfoList = videosData
             self.delegate?.didFetchVideosInfo()
