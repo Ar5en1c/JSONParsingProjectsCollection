@@ -13,10 +13,20 @@ import UIKit
 
 class JSONProjectMainVC: UIViewController {
 
+    @IBOutlet var mainView: UIView!
+    @IBOutlet weak var internetSwitch: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        internetSwitch.addTarget(self, action: #selector(internetSwitchToggled(_:)), for: .valueChanged)
     }
+    
+    @objc func internetSwitchToggled(_ sender: UISwitch) {
+        NetworkManager.shared.isOnline = sender.isOn
+        self.mainView.backgroundColor = NetworkManager.shared.isOnline ? .systemYellow : .systemGray4
+        print("Network status changed to \(NetworkManager.shared.isOnline ? "Online" : "Offline")")
+        }
 
 //    MARK: Handling the User info Button click
     @IBAction func screen1Tapped(_ sender: Any) {

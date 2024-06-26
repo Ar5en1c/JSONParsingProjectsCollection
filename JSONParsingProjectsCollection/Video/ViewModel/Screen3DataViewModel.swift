@@ -40,14 +40,19 @@ import Foundation
 class Screen3DataViewModel {
     weak var delegate: VideosInfoDataDelegate?
     private var videoInfoList: [VideosModel] = []
-
+    private var apiManager: APIManager
+    
+    init(apiManager: APIManager) {
+        self.apiManager = apiManager
+    }
+    
     func fetchData() async throws{
         do {
-            let videosData: [VideosModel]? = try await APIManager.shared.fetchData(url: Constants.videoInfoAPI.rawValue)
-            DispatchQueue.main.async {
-                self.videoInfoList = videosData ?? []
-                self.delegate?.didFetchVideosInfo()
-            }
+            let videosData: [VideosModel] = try await apiManager.fetchDataAsJSON(url: Constants.videoInfoAPI.rawValue)
+//            DispatchQueue.main.async {
+            self.videoInfoList = videosData
+            self.delegate?.didFetchVideosInfo()
+//            }
         } catch {
             print(ErrorMessages.errorFetchMessage.rawValue)
         }

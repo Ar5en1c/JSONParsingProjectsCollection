@@ -15,7 +15,7 @@ class Screen2VC: UIViewController {
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!
 
-    var viewModel = Screen2DataViewModel()
+    var viewModel = Screen2DataViewModel(apiManager: APIManager())
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,17 +40,16 @@ extension Screen2VC {
 extension Screen2VC: ActorInfoDataDelegate {
     func didFetchActorInfo() {
         guard let actorInfo = viewModel.getActorInfo() else { return }
-        
+        DispatchQueue.main.async {
             self.nameLabel.text = "Name: \(actorInfo.name)"
             self.heightLabel.text = "Height: \(actorInfo.height)"
             self.birthYearLabel.text = "Birth Year: \(actorInfo.birth_year)"
             self.genderLabel.text = "Gender: \(actorInfo.gender)"
-            
             if let formattedDate = actorInfo.created.formattedDate() {
                 self.createdLabel.text = "Created: \(formattedDate)"
             } else {
                 self.createdLabel.text = "Created: \(actorInfo.created)"
             }
-        
+        }
     }
 }

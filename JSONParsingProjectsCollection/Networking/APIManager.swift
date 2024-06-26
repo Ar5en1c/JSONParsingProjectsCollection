@@ -57,10 +57,12 @@ import Foundation
 class APIManager {
     static let shared = APIManager()
     
-    private init(){}
-    
-// MARK: Fetch Image function using async/await with generic Data? Type for converting the data to UIImage later
-    func fetchData<T: Decodable>(url: String) async throws -> T {
+// MARK: - Fetch Data function for fetching and decoding data as JSON using async/await with generic T Type
+    func fetchDataAsJSON<T: Decodable>(url: String) async throws -> T {
+        guard NetworkManager.shared.isOnline else {
+            return try await switchData(url: url)
+                }
+        
         guard let serverURL = URL(string: url) else {
             throw FetchError.invalidURL
         }
@@ -74,8 +76,8 @@ class APIManager {
         }
     }
     
-// MARK: Fetch Image function using async/await with generic Data? Type for converting the data to UIImage later
-    func fetchImage(from url: String) async throws -> Data? {
+// MARK: - Fetch Data function for fetching the data using async/await with generic Data? Type for converting the data to UIImage later
+    func fetchDataAsDataObj(from url: String) async throws -> Data? {
         guard let imageURL = URL(string: url) else {
             print(ErrorMessages.invalidURL.rawValue)
             return nil
@@ -87,5 +89,23 @@ class APIManager {
             print("\(ErrorMessages.errorFetchMessage.rawValue): \(error)")
             return nil
         }
+    }
+    
+// MARK: - Private Method for handling no internet connection by using mock data instead
+    private func switchData<T: Decodable>(url: String) async throws -> T {
+        switch url {
+            case Constants.userInfoAPI.rawValue:
+                return MockData.users as! T
+            case Constants.actorInfoAPI.rawValue:
+                return MockData.actorInfo as! T
+            case Constants.videoInfoAPI.rawValue:
+                return MockData.videosModel as! T
+            case Constants.newsInfoAPI.rawValue:
+                return MockData.newsResponse as! T
+            case Constants.mealsInfoAPI.rawValue:
+                return MockData.menu as! T
+            default:
+                throw FetchError.invalidURL
+            }
     }
 }

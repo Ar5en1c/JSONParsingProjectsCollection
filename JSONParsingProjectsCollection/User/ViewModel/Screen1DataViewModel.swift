@@ -10,10 +10,15 @@ import Foundation
 class Screen1DataViewModel {
     weak var delegate: UserDataDelegate?
     private var userInfoList: [User] = []
+    private var apiManager: APIManager
+    
+    init(apiManager: APIManager) {
+        self.apiManager = apiManager
+    }
     
     func fetchData() async throws {
         do {
-            let userResult: [User] = try await APIManager.shared.fetchData(url: Constants.userInfoAPI.rawValue)
+            let userResult: [User] = try await apiManager.fetchDataAsJSON(url: Constants.userInfoAPI.rawValue)
             self.userInfoList = userResult
             self.delegate?.didFetchUserData()
         } catch {

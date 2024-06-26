@@ -15,7 +15,7 @@ class Screen3VC: UIViewController {
     @IBOutlet weak var titleTranscoding: UILabel!
     @IBOutlet weak var heightLabel: UILabel!
     
-    var viewModel = Screen3DataViewModel()
+    var viewModel = Screen3DataViewModel(apiManager: APIManager())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,24 +41,25 @@ extension Screen3VC {
 extension Screen3VC: VideosInfoDataDelegate {
     func didFetchVideosInfo() {
         guard let videosInfo = viewModel.getVideoInfo(at: 0) else { return }
-
-        videoTitle.text = "Video Title: \(videosInfo.title)"
-        if let formattedDate = videosInfo.created_at.formattedDate(inputFormat: "yyyy-MM-dd'T'HH:mm:ssZZZZZ") {
-            createdAt.text = "Created At: \(formattedDate)"
-        } else {
-            createdAt.text = "Created At: \(videosInfo.created_at)"
-        }
+        DispatchQueue.main.async { [self] in
+            self.videoTitle.text = "Video Title: \(videosInfo.title)"
+            if let formattedDate = videosInfo.created_at.formattedDate(inputFormat: "yyyy-MM-dd'T'HH:mm:ssZZZZZ") {
+                self.createdAt.text = "Created At: \(formattedDate)"
+            } else {
+                self.createdAt.text = "Created At: \(videosInfo.created_at)"
+            }
             
-        // Display details from the first transcoding
-        if let firstTranscoding = videosInfo.transcodings.first {
-            idLabel.text = "Id: \(firstTranscoding.id)"
-            titleTranscoding.text = "Title: \(firstTranscoding.title)"
-            heightLabel.text = "Height: \(firstTranscoding.height)"
-        } else {
-            // Handle case where there are no transcodings
-            idLabel.text = "Id: N/A"
-            titleTranscoding.text = "Title: N/A"
-            heightLabel.text = "Height: N/A"
+            // Display details from the first transcoding
+            if let firstTranscoding = videosInfo.transcodings.first {
+                self.idLabel.text = "Id: \(firstTranscoding.id)"
+                self.titleTranscoding.text = "Title: \(firstTranscoding.title)"
+                self.heightLabel.text = "Height: \(firstTranscoding.height)"
+            } else {
+                // Handle case where there are no transcodings
+                self.idLabel.text = "Id: N/A"
+                self.titleTranscoding.text = "Title: N/A"
+                self.heightLabel.text = "Height: N/A"
+            }
         }
     }
 }
